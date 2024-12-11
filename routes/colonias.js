@@ -1,15 +1,16 @@
 const express = require("express");
 const pool = require("../db");
 const router = express.Router();
+const { authenticateToken, authorizeRole } = require("../middlewares/auth.js");
 
 // Obtener todos las colonias
-router.get("/", async (req, res) => {
+router.get("/", authenticateToken, authorizeRole([1, 2]), async (req, res) => {
   const [rows] = await pool.query("SELECT * FROM colonia");
   res.json(rows);
 });
 
 // Agregar una colonia
-router.post("/", async (req, res) => {
+router.post("/", authenticateToken, authorizeRole([1]), async (req, res) => {
   const { nombre_colonia } = req.body;
   await pool.query("INSERT INTO colonia (nombre_colonia) VALUES (?)", [
     nombre_colonia,
@@ -18,7 +19,7 @@ router.post("/", async (req, res) => {
 });
 
 // Actualizar una colonia
-router.put("/:id", async (req, res) => {
+router.put("/:id", authenticateToken, authorizeRole([1]), async (req, res) => {
   const { nombre_colonia } = req.body;
   const { id } = req.params;
   await pool.query(
@@ -29,10 +30,15 @@ router.put("/:id", async (req, res) => {
 });
 
 // Eliminar una colonia
-router.delete("/:id", async (req, res) => {
-  const { id } = req.params;
-  await pool.query("DELETE FROM colonia WHERE id_colonia = ?", [id]);
-  res.send("Colonia eliminada");
-});
+router.delete(
+  "/:id",
+  authenticateToken,
+  authorizeRole([1]),
+  async (req, res) => {
+    const { id } = req.params;
+    await pool.query("DELETE FROM colonia WHERE id_colonia = ?", [id]);
+    res.send("Colonia eliminada");
+  }
+);
 
 module.exports = router;
