@@ -7,7 +7,7 @@ const pool = require("./db.js");
 const callesRouter = require("./routes/calles.js");
 const coloniasRouter = require("./routes/colonias.js");
 const juecesRouter = require("./routes/jueces.js");
-const jwtSecret = process.env.JWT_SECRET;
+const jwtSecret = process.env.JWT_KEY;
 
 const app = express();
 app.use(cors({ origin: "*" }));
