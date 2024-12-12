@@ -13,27 +13,6 @@ const app = express();
 app.use(cors({ origin: "*" }));
 app.use(express.json());
 
-// Login para obtener el token
-app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  const query = "SELECT * FROM users WHERE email = ?";
-  const [users] = await pool.query(query, [email]);
-
-  if (!users || users.length === 0)
-    return res.status(404).send("Usuario no encontrado");
-
-  const user = users[0]; // El primer usuario que coincida
-
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) return res.status(401).send("Contraseña incorrecta");
-
-  const token = jwt.sign(
-    { id: user.id, name: user.nombre, rol: user.id_rol },
-    jwtSecret
-  );
-  res.json({ token });
-});
-
 // Ruta de registro de usuario
 app.post("/register", async (req, res) => {
   const { name, email, password, rol } = req.body;
@@ -55,6 +34,27 @@ app.post("/register", async (req, res) => {
   await pool.query(query, [name, email, hashedPassword, rol]);
 
   res.status(201).send("Usuario registrado exitosamente");
+});
+
+// Login para obtener el token
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  const query = "SELECT * FROM users WHERE email = ?";
+  const [users] = await pool.query(query, [email]);
+
+  if (!users || users.length === 0)
+    return res.status(404).send("Usuario no encontrado");
+
+  const user = users[0]; // El primer usuario que coincida
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) return res.status(401).send("Contraseña incorrecta");
+
+  const token = jwt.sign(
+    { id: user.id, name: user.nombre, rol: user.id_rol },
+    jwtSecret
+  );
+  res.json({ token });
 });
 
 // Rutas
