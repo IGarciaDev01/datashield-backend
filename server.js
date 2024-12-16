@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 const pool = require("./db.js");
 const callesRouter = require("./routes/calles.js");
 const coloniasRouter = require("./routes/colonias.js");
+const delegacionesRouter = require("./routes/delegaciones.js");
 const juecesRouter = require("./routes/jueces.js");
 const vigilantesRouter = require("./routes/vigilantes.js");
 const jwtSecret = process.env.JWT_KEY;
@@ -61,6 +62,7 @@ app.post("/login", async (req, res) => {
 // Rutas
 app.use("/api/calles", callesRouter);
 app.use("/api/colonias", coloniasRouter);
+app.use("/api/deleaciones", delegacionesRouter);
 app.use("/api/jueces", juecesRouter);
 app.use("/api/vigilantes", vigilantesRouter);
 

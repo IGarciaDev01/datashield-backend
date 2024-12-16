@@ -12,14 +12,14 @@ router.get("/", authenticateToken, authorizeRole([1, 2]), async (req, res) => {
     v.apellidos_vigilante, 
     v.numero_domicilio_vigilante, 
     v.codigo_postal_vigilante, 
-    v.numero_vigilante, 
+    v.numero_telefono, 
     v.edad_vigilante,
     v.armado,
     c.nombre_calle,
     co.nombre_colonia,
     d.nombre_delegacion
 
-  FROM entidad v
+  FROM vigilante v
   JOIN calle c ON v.vigilante_id_calle = c.id_calle
   JOIN colonia co ON v.vigilante_id_colonia = co.id_colonia
   JOIN delegacion d ON v.vigilante_id_delegacion = d.id_delegacion;
@@ -35,7 +35,7 @@ router.post("/", authenticateToken, authorizeRole([1]), async (req, res) => {
     apellidos_vigilante,
     numero_domicilio_vigilante,
     codigo_postal_vigilante,
-    numero_vigilante,
+    numero_telefono,
     edad_vigilante,
     armado,
     vigilante_id_calle,
@@ -49,7 +49,7 @@ router.post("/", authenticateToken, authorizeRole([1]), async (req, res) => {
     apellidos_vigilante,
     numero_domicilio_vigilante,
     codigo_postal_vigilante,
-    numero_vigilante,
+    numero_telefono,
     edad_vigilante,
     armado,
     vigilante_id_calle,
@@ -63,7 +63,7 @@ router.post("/", authenticateToken, authorizeRole([1]), async (req, res) => {
     apellidos_vigilante,
     numero_domicilio_vigilante,
     codigo_postal_vigilante,
-    numero_vigilante,
+    numero_telefono,
     edad_vigilante,
     armado,
     vigilante_id_calle,
@@ -80,7 +80,7 @@ router.put("/:id", authenticateToken, authorizeRole([1]), async (req, res) => {
     apellidos_vigilante,
     numero_domicilio_vigilante,
     codigo_postal_vigilante,
-    numero_vigilante,
+    numero_telefono,
     edad_vigilante,
     armado,
     vigilante_id_calle,
@@ -96,7 +96,7 @@ router.put("/:id", authenticateToken, authorizeRole([1]), async (req, res) => {
     apellidos_vigilante = ?,
     numero_domicilio_vigilante = ?,
     codigo_postal_vigilante = ?,
-    numero_vigilante = ?,
+    numero_telefono = ?,
     edad_vigilante = ?,
     armado = ?,
     vigilante_id_calle = ?,
@@ -110,7 +110,7 @@ router.put("/:id", authenticateToken, authorizeRole([1]), async (req, res) => {
     apellidos_vigilante,
     numero_domicilio_vigilante,
     codigo_postal_vigilante,
-    numero_vigilante,
+    numero_telefono,
     edad_vigilante,
     armado,
     vigilante_id_calle,
