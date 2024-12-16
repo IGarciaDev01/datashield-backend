@@ -62,7 +62,7 @@ app.post("/login", async (req, res) => {
 // Rutas
 app.use("/api/calles", callesRouter);
 app.use("/api/colonias", coloniasRouter);
-app.use("/api/deleaciones", delegacionesRouter);
+app.use("/api/delegaciones", delegacionesRouter);
 app.use("/api/jueces", juecesRouter);
 app.use("/api/vigilantes", vigilantesRouter);
 
