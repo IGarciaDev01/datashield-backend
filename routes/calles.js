@@ -29,7 +29,7 @@ router.put("/:id", authenticateToken, authorizeRole([1]), async (req, res) => {
   res.send("Calle actualizada");
 });
 
-// Eliminar un producto
+// Eliminar un calle
 router.delete(
   "/:id",
   authenticateToken,

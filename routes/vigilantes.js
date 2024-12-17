@@ -43,21 +43,7 @@ router.post("/", authenticateToken, authorizeRole([1]), async (req, res) => {
     vigilante_id_delegacion,
   } = req.body;
 
-  const query = `
-  INSERT INTO vigilante (
-    nombre_vigilante,
-    apellidos_vigilante,
-    numero_domicilio_vigilante,
-    codigo_postal_vigilante,
-    numero_telefono,
-    edad_vigilante,
-    armado,
-    vigilante_id_calle,
-    vigilante_id_colonia,
-    vigilante_id_delegacion,
-  ) 
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-
+  const query = `INSERT INTO vigilante (nombre_vigilante, apellidos_vigilante, numero_domicilio_vigilante, codigo_postal_vigilante, numero_telefono, edad_vigilante, armado, vigilante_id_calle, vigilante_id_colonia, vigilante_id_delegacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
   await pool.query(query, [
     nombre_vigilante,
     apellidos_vigilante,
