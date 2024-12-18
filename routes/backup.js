@@ -46,18 +46,30 @@ router.get(
 
       // Crear un archivo ZIP con el respaldo
       const zipFilePath = "backup.zip";
-      const zip = archiver("zip");
+      const zip = archiver("zip", {
+        zlib: { level: 9 }, // Mejor compresión
+      });
       const output = fs.createWriteStream(zipFilePath);
 
+      // Establecer el flujo para el archivo ZIP
       zip.pipe(output);
-      zip.file(backupFilePath, { name: "backup.sql" });
-      await zip.finalize();
 
-      // Enviar el archivo ZIP como respuesta
-      res.download(zipFilePath, "backup.zip", () => {
-        // Eliminar archivos temporales
+      // Agregar el archivo SQL al archivo ZIP
+      zip.file(backupFilePath, { name: "backup.sql" });
+
+      // Finalizar el archivo ZIP y esperar a que se escriba completamente
+      zip.finalize();
+
+      // Cuando se haya terminado de crear el ZIP, enviarlo como respuesta
+      output.on("close", () => {
+        // Eliminar archivo temporal
         fs.unlinkSync(backupFilePath);
-        fs.unlinkSync(zipFilePath);
+
+        // Enviar el archivo ZIP como respuesta
+        res.download(zipFilePath, "backup.zip", () => {
+          // Limpiar archivo ZIP después de ser enviado
+          fs.unlinkSync(zipFilePath);
+        });
       });
     } catch (error) {
       console.error("Error al generar el respaldo:", error);
