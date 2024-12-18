@@ -75,21 +75,7 @@ router.put("/:id", authenticateToken, authorizeRole([1]), async (req, res) => {
   } = req.body;
   const { id } = req.params;
 
-  const query = `
-  UPDATE vigilante
-  SET 
-   nombre_vigilante = ?,
-    apellidos_vigilante = ?,
-    numero_domicilio_vigilante = ?,
-    codigo_postal_vigilante = ?,
-    numero_telefono = ?,
-    edad_vigilante = ?,
-    armado = ?,
-    vigilante_id_calle = ?,
-    vigilante_id_colonia = ?,
-    vigilante_id_delegacion = ?,
-  WHERE id_vigilante = ?
-`;
+  const query = `UPDATE vigilante SET nombre_vigilante = ?, apellidos_vigilante = ?, numero_domicilio_vigilante = ?, codigo_postal_vigilante = ?, numero_telefono = ?, edad_vigilante = ?, armado = ?,vigilante_id_calle = ?, vigilante_id_colonia = ?, vigilante_id_delegacion = ? WHERE id_vigilante = ?`;
 
   await pool.query(query, [
     nombre_vigilante,
