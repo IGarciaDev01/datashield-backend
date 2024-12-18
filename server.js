@@ -9,6 +9,7 @@ const coloniasRouter = require("./routes/colonias.js");
 const delegacionesRouter = require("./routes/delegaciones.js");
 const juecesRouter = require("./routes/jueces.js");
 const vigilantesRouter = require("./routes/vigilantes.js");
+const backupRouter = require("./routes/backup.js");
 const jwtSecret = process.env.JWT_KEY;
 
 const app = express();
@@ -65,6 +66,7 @@ app.use("/api/colonias", coloniasRouter);
 app.use("/api/delegaciones", delegacionesRouter);
 app.use("/api/jueces", juecesRouter);
 app.use("/api/vigilantes", vigilantesRouter);
+app.use("/api/backup", backupRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`));
